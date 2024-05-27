@@ -32,8 +32,10 @@ html, body {
 .input-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 5%;
-    padding: 10%;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .input-button {
@@ -50,3 +52,14 @@ html, body {
     width: 15%;
 }
 
+#equal-button {
+    background-color: orange;
+}
+
+#equal-button:hover {
+    background-color: darkorange;
+}
+
+#equal-button:active {
+    background-color: forestgreen;
+}
