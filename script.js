@@ -2,7 +2,7 @@ let firstNumber;
 let secondNumber;
 let operator;
 
-function add(firstNumber, secondNumber) {
+function addition(firstNumber, secondNumber) {
     return firstNumber + secondNumber;
 }
 
