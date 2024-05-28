@@ -1,6 +1,11 @@
-let firstNumber;
-let secondNumber;
-let operator;
+let firstNumber = '';
+let secondNumber = '';
+let operator = '';
+
+const input1 = document.getElementById("input-number-1");
+const input2 = document.getElementById("input-number-2");
+const operationSymbol = document.getElementById("operation-symbol");
+const resultContainer = document.getElementById("result-container");
 
 function addition(firstNumber, secondNumber) {
     return firstNumber + secondNumber;
@@ -19,5 +24,90 @@ function division(firstNumber, secondNumber) {
 }
 
 function operate(operation, firstNumber, secondNumber) {
-    return operation(firstNumber, secondNumber);
+    switch (operation) {
+        case '+':
+            return addition(firstNumber, secondNumber);
+        case '-':
+            return subtraction(firstNumber, secondNumber);
+        case 'x':
+            return multiplication(firstNumber, secondNumber);
+        case '/':
+            return division(firstNumber, secondNumber);
+        default:
+            return null;
+    }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    let inputNumber1 = '';
+    let inputNumber2 = '';
+    let operationSymbolValue = '';
+    let currentInput = 'inputNumber1';
+    let calculationDone = false;
+
+    const updateDisplay = () => {
+        input1.textContent = inputNumber1;
+        input2.textContent = inputNumber2;
+        operationSymbol.textContent = operationSymbolValue;
+        if (calculationDone) {
+            resultContainer.textContent = ' = ' + operate(operationSymbolValue, parseFloat(inputNumber1), parseFloat(inputNumber2)).toFixed(1).toString();
+        } else {
+            resultContainer.textContent = '';
+        }
+    };
+
+    const inputButtons = document.querySelectorAll('.input-button');
+    const equalButton = document.getElementById('equal-button');
+
+    const setButtonState = (state) => {
+        inputButtons.forEach(button => {
+            if (button.id !== 'equal-button') {
+                button.disabled = state;
+            }
+        });
+    };
+
+    inputButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const value = button.textContent;
+
+            if (calculationDone && value !== 'Del') {
+                return;
+            }
+
+            if (!isNaN(value) || value === '.') {
+                if (currentInput === 'inputNumber1') {
+                    inputNumber1 += value;
+                } else {
+                    inputNumber2 += value;
+                }
+            } else if (value === '=') {
+                if (inputNumber1 !== '' && inputNumber2 !== '' && operationSymbolValue !== '') {
+                    currentInput = 'inputNumber1';
+                    calculationDone = true;
+                    setButtonState(true);
+                    equalButton.textContent = 'Del';
+                    updateDisplay();
+                }
+            } else if (value === 'Del') {
+                if (calculationDone) {
+                    inputNumber1 = '';
+                    inputNumber2 = '';
+                    operationSymbolValue = '';
+                    calculationDone = false;
+                    setButtonState(false);
+                    equalButton.textContent = '=';
+                }
+            } else {
+                if (currentInput === 'inputNumber1' && inputNumber1 !== '') {
+                    operationSymbolValue = value;
+                    currentInput = 'inputNumber2';
+                }
+            }
+
+            updateDisplay();
+        });
+    });
+
+    updateDisplay();
+});

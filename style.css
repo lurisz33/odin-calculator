@@ -23,10 +23,14 @@ html, body {
 }
 
 .calculator-display {
+    display: flex;
+    flex-direction: row;
     width: 90%;
     flex: 1;
     text-align: right;
     margin: 0 5px;
+    font-size: 1.5em;
+    gap: 10px;
 }
 
 .input-container {
@@ -39,12 +43,12 @@ html, body {
 }
 
 .input-button {
+    text-align: center;
     background-color: royalblue;
     border: none;
     border-radius: 20px;
     color: white;
     padding: 15px 32px;
-    text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 1.5em;
