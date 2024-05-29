@@ -80,8 +80,14 @@ document.addEventListener("DOMContentLoaded", function() {
             if (calculationDone && value !== 'Del') {
                 return;
             }
-
             if (!isNaN(value) || value === '.') {
+                if (value === '.') {
+                    if (currentInput === 'inputNumber1' && inputNumber1.includes('.')) {
+                        return;
+                    } else if (currentInput === 'inputNumber2' && inputNumber2.includes('.')) {
+                        return;
+                    }
+                }
                 if (currentInput === 'inputNumber1') {
                     inputNumber1 += value;
                 } else {
