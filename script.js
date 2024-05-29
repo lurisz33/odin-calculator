@@ -32,7 +32,11 @@ function operate(operation, firstNumber, secondNumber) {
         case 'x':
             return multiplication(firstNumber, secondNumber);
         case '/':
-            return division(firstNumber, secondNumber);
+            if (secondNumber === 0) {
+                return "Dont you dare!";
+            } else {
+                return division(firstNumber, secondNumber);
+            }
         default:
             return null;
     }
@@ -50,11 +54,13 @@ document.addEventListener("DOMContentLoaded", function() {
         input2.textContent = inputNumber2;
         operationSymbol.textContent = operationSymbolValue;
         if (calculationDone) {
-            resultContainer.textContent = ' = ' + operate(operationSymbolValue, parseFloat(inputNumber1), parseFloat(inputNumber2)).toFixed(1).toString();
+            const result = operate(operationSymbolValue, parseFloat(inputNumber1), parseFloat(inputNumber2));
+            resultContainer.textContent = ' = ' + (typeof result === 'number' ? result.toFixed(1).toString() : result);
         } else {
             resultContainer.textContent = '';
         }
     };
+
 
     const inputButtons = document.querySelectorAll('.input-button');
     const equalButton = document.getElementById('equal-button');
