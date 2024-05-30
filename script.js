@@ -61,10 +61,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-
-    const inputButtons = document.querySelectorAll('.input-button');
-    const equalButton = document.getElementById('equal-button');
-
     const setButtonState = (state) => {
         inputButtons.forEach(button => {
             if (button.id !== 'equal-button') {
@@ -73,51 +69,58 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     };
 
+    const handleInput = (value) => {
+        if (calculationDone && value !== 'Del') {
+            return;
+        }
+
+        if (!isNaN(value) || value === '.') {
+            if (value === '.') {
+                if (currentInput === 'inputNumber1' && inputNumber1.includes('.')) {
+                    return;
+                } else if (currentInput === 'inputNumber2' && inputNumber2.includes('.')) {
+                    return;
+                }
+            }
+            if (currentInput === 'inputNumber1') {
+                inputNumber1 += value;
+            } else {
+                inputNumber2 += value;
+            }
+        } else if (value === '=') {
+            if (inputNumber1 !== '' && inputNumber2 !== '' && operationSymbolValue !== '') {
+                currentInput = 'inputNumber1';
+                calculationDone = true;
+                setButtonState(true);
+                equalButton.textContent = 'Del';
+                updateDisplay();
+            }
+        } else if (value === 'Del') {
+            if (calculationDone) {
+                inputNumber1 = '';
+                inputNumber2 = '';
+                operationSymbolValue = '';
+                calculationDone = false;
+                setButtonState(false);
+                equalButton.textContent = '=';
+            }
+        } else {
+            if (currentInput === 'inputNumber1' && inputNumber1 !== '') {
+                operationSymbolValue = value;
+                currentInput = 'inputNumber2';
+            }
+        }
+
+        updateDisplay();
+    };
+
+    const inputButtons = document.querySelectorAll('.input-button');
+    const equalButton = document.getElementById('equal-button');
+
     inputButtons.forEach(button => {
         button.addEventListener('click', () => {
             const value = button.textContent;
-
-            if (calculationDone && value !== 'Del') {
-                return;
-            }
-            if (!isNaN(value) || value === '.') {
-                if (value === '.') {
-                    if (currentInput === 'inputNumber1' && inputNumber1.includes('.')) {
-                        return;
-                    } else if (currentInput === 'inputNumber2' && inputNumber2.includes('.')) {
-                        return;
-                    }
-                }
-                if (currentInput === 'inputNumber1') {
-                    inputNumber1 += value;
-                } else {
-                    inputNumber2 += value;
-                }
-            } else if (value === '=') {
-                if (inputNumber1 !== '' && inputNumber2 !== '' && operationSymbolValue !== '') {
-                    currentInput = 'inputNumber1';
-                    calculationDone = true;
-                    setButtonState(true);
-                    equalButton.textContent = 'Del';
-                    updateDisplay();
-                }
-            } else if (value === 'Del') {
-                if (calculationDone) {
-                    inputNumber1 = '';
-                    inputNumber2 = '';
-                    operationSymbolValue = '';
-                    calculationDone = false;
-                    setButtonState(false);
-                    equalButton.textContent = '=';
-                }
-            } else {
-                if (currentInput === 'inputNumber1' && inputNumber1 !== '') {
-                    operationSymbolValue = value;
-                    currentInput = 'inputNumber2';
-                }
-            }
-
-            updateDisplay();
+            handleInput(value);
         });
     });
 
