@@ -121,5 +121,25 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
+    document.addEventListener('keydown', (event) => {
+        const key = event.key;
+
+        if ((key <= 0 || key >= 0) || key === '.') {
+            //handle the input
+        } else if (key === '+') {
+            //handle the input
+        } else if (key === '-') {
+            //handle the input
+        } else if (key === 'x') {
+            //handle the input
+        } else if (key === '/') {
+            //handle the input
+        } else if (key === 'Enter') {
+            //handle the input
+        } else if (key === 'Backspace') {
+            //handle the input
+        }
+    });
+
     updateDisplay();
 });
