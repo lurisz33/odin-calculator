@@ -128,19 +128,19 @@ document.addEventListener("DOMContentLoaded", function() {
         const key = event.key;
 
         if ((key <= 0 || key >= 0) || key === '.') {
-            //handle the input
+            handleInput(key);
         } else if (key === '+') {
-            //handle the input
+            handleInput('+');
         } else if (key === '-') {
-            //handle the input
+            handleInput('-');
         } else if (key === 'x') {
-            //handle the input
+            handleInput('x');
         } else if (key === '/') {
-            //handle the input
+            handleInput('/');
         } else if (key === 'Enter') {
-            //handle the input
+            handleInput('=');
         } else if (key === 'Backspace') {
-            //handle the input
+            handleInput('Del');
         }
     });
 
